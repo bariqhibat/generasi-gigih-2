@@ -1,5 +1,26 @@
 require 'game'
+require 'net/http'
+require 'json'
 
+describe 'English API' do
+    it 'should be structured in expected class and attributes' do
+        # check if word is in english dictionary
+        uri = URI('https://api.dictionaryapi.dev/api/v2/entries/en/hello')
+        response = Net::HTTP.get(uri)
+        response_json = JSON.parse(response)
+        
+        expect(response_json).to be_instance_of(Array)
+        expect(response_json.first.key?("word")).to be true
+        
+        # check if word ISN'T in english dictionary
+        uri = URI('https://api.dictionaryapi.dev/api/v2/entries/en/RANDOMRANDOM')
+        response = Net::HTTP.get(uri)
+        response_json = JSON.parse(response)
+        
+        expect(response_json).to be_instance_of(Hash)
+        expect(response_json.key?("title")).to be true
+    end
+end
 
 # The outer block called a spec group
 # This is where we specify what we want to build, in this case a Game class
@@ -60,28 +81,28 @@ describe 'Game' do
     it 'should handle an incorrect English word' do
         game = Game.new('DRINK')
         guess_word = 'ASDASD'
-
+        
         result = game.match_word(guess_word)
-
+        
         expect(result).to eq("\u{1F7E6}\u{1F7E6}\u{1F7E6}\u{1F7E6}\u{1F7E6}")
     end
-
+    
     # Isn't english word
     it 'should handle an invalid length of word' do
         game = Game.new('DRINK')
         guess_word = 'FUN'
-
+        
         result = game.match_word(guess_word)
-
+        
         expect(result).to eq("\u{1F7E6}\u{1F7E6}\u{1F7E6}\u{1F7E6}\u{1F7E6}")
-
+        
         guess_word = 'GENEROUS'
-
+        
         result = game.match_word(guess_word)
-
+        
         expect(result).to eq("\u{1F7E6}\u{1F7E6}\u{1F7E6}\u{1F7E6}\u{1F7E6}")
     end
-
+    
 end
 
 end
