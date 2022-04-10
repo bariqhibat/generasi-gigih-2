@@ -1,0 +1,6 @@
+<h1> Items </h1>
+<%= form_with model: @item do |form| %>
+    <%= form.text_field :name, placeholder: "namaku bento" %>
+    <%= form.text_field :price, placeholder: "price" %>
+    <%= form.submit %>
+  <% end %>

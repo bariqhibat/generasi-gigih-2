@@ -1,0 +1,30 @@
+<h1> Items </h1>
+<table>
+  <thead>
+    <tr>
+        <td><b>Name</b></td>
+        <td><b>Price</b></td>
+        <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= item.price %></td>
+        <td>
+          <table>
+            <tbody>
+              <tr>
+                  <td><%= link_to "Show", item_path(item) %></td>
+                  <td><%= link_to "Edit", edit_item_path(item) %></td>
+                  <td><span><%= button_to "delete", item_path(item), :method => "delete" %></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<a href="/items/new">New Item</a>
