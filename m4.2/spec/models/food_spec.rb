@@ -5,7 +5,7 @@ RSpec.describe Food, type: :model do
     return Category.new(name: "dummy")
   }
   subject(:food) { 
-    return Food.new(
+    return Food.create(
       name: 'Test',
       description: "Bla",
       price: 15000.0,
@@ -118,7 +118,8 @@ RSpec.describe Food, type: :model do
         category: new_category
       )
 
-      expect(Food.by_category("test_test")).to eq([food2])
+      expect(Food.by_category(category.name)).to eq([food])
+      expect(Food.by_category(new_category.name)).to eq([food2])
     end
   end
 
