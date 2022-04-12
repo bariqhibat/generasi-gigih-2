@@ -108,4 +108,18 @@ RSpec.describe Food, type: :model do
     end
   end
 
+  describe 'self#by_category' do
+    it "should return foods that has the category" do
+      new_category = Category.new(name: "test_test")
+      food2 = Food.create(
+        name: "Nasi Semur Jengkol",
+        description: "Based on dongfruit, this menu promises a unique and delicious taste with a small hint of bitterness.",
+        price: 8000.0,
+        category: new_category
+      )
+
+      expect(Food.by_category("test_test")).to eq([food2])
+    end
+  end
+
 end
