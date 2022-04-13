@@ -13,6 +13,11 @@ RSpec.describe FoodsController do
       get :show, params: { id: food }
       expect(response).to render_template :show
     end
+
+    it 'missing record, renders the :record_not_found template' do
+      get :show, params: { id: "999" }
+      expect(response).to render_template :record_not_found
+    end
   end
 
   describe 'GET #index' do
