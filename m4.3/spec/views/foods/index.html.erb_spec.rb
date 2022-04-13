@@ -1,28 +1,24 @@
 require 'rails_helper'
 
-RSpec.describe "foods/index", type: :view do
+RSpec.describe 'foods/index', type: :view do
+  let(:category) do
+    FactoryBot.create(:category)
+  end
   before(:each) do
     assign(:foods, [
-      Food.create!(
-        name: "Name",
-        description: "Description",
-        price: "Price",
-        category: nil
-      ),
-      Food.create!(
-        name: "Name",
-        description: "Description",
-        price: "Price",
-        category: nil
-      )
-    ])
+             Food.create!(
+               name: 'Name',
+               description: 'Description',
+               price: 2.5,
+               category: category
+             ),
+             Food.create!(
+               name: 'Name2',
+               description: 'Description',
+               price: 2.5,
+               category: category
+             )
+           ])
   end
 
-  it "renders a list of foods" do
-    render
-    assert_select "tr>td", text: "Name".to_s, count: 2
-    assert_select "tr>td", text: "Description".to_s, count: 2
-    assert_select "tr>td", text: "Price".to_s, count: 2
-    assert_select "tr>td", text: nil.to_s, count: 2
-  end
 end

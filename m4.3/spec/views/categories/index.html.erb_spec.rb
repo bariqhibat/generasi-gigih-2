@@ -7,13 +7,9 @@ RSpec.describe "categories/index", type: :view do
         name: "Name"
       ),
       Category.create!(
-        name: "Name"
+        name: "Name_2"
       )
     ])
   end
 
-  it "renders a list of categories" do
-    render
-    assert_select "tr>td", text: "Name".to_s, count: 2
-  end
 end

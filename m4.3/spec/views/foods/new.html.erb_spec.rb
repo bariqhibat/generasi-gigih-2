@@ -1,12 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe "foods/new", type: :view do
+  let(:category) do
+    FactoryBot.create(:category)
+  end
   before(:each) do
     assign(:food, Food.new(
       name: "MyString",
       description: "MyString",
-      price: "MyString",
-      category: nil
+      price: 1.5,
+      category: category
     ))
   end
 
