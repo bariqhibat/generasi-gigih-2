@@ -1,4 +1,5 @@
 class Food < ApplicationRecord
+    # rails generate scaffold_controller Food name description price category:references
     belongs_to :category
     validates :name, presence: true, uniqueness: true
     validates :description, presence: true
