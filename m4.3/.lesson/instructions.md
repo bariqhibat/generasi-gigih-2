@@ -220,7 +220,7 @@ RSpec.describe Food, type: :model do
       description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
       price: 10000.0
     )
-    
+
     food2 = Food.new(
       name: "Nasi Uduk",
       description: "Just with a different description.",
@@ -228,7 +228,7 @@ RSpec.describe Food, type: :model do
     )
 
     food2.valid?
-    
+
     expect(food2.errors[:name]).to include("has already been taken")
   end
 end
@@ -290,7 +290,7 @@ require 'rails_helper'
 
 RSpec.describe Food, type: :model do
   # -cut-
-  
+
   describe 'self#by_letter' do
     it "should return a sorted array of results that match" do
       food1 = Food.create(
@@ -373,9 +373,11 @@ Finished in 0.19866 seconds (files took 1.48 seconds to load)
 # Homework
 
 For your homework, write specs and necessary code to make the following scenario pass:
+
 - Food model does not accept non numeric values for "price" field
 - Food model does not accept "price" less than 0.01
 
 Bonus point:
+
 - Category model with "name" as its only field, write the necessary specs
 - Change Food model so it now has to have one category
