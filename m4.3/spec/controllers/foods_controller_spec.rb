@@ -124,6 +124,18 @@ RSpec.describe FoodsController do
         expect(response).to redirect_to @food
       end
     end
+    context 'with invalid attributes' do
+      it 'does not save the updated food in the database' do
+        patch :update, params: { id: @food, food: attributes_for(:invalid_food, name: 'Nasi Uduk', description: nil) }
+        expect(@food.name).not_to eq('Nasi Uduk')
+      end
+
+      it 're-renders the edit template' do
+        patch :update, params: { id: @food, food: attributes_for(:invalid_food) }
+        expect(assigns(:food)).to eq @food
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
   end
 
   describe 'DELETE #destroy' do
