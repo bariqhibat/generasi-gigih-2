@@ -5,7 +5,7 @@ RSpec.describe Food, type: :model do
     return FactoryBot.create(:category)
   end
   subject(:food) do
-    return FactoryBot.create(:food)
+    return FactoryBot.create(:food, category: category)
   end
 
   it 'has a valid factory' do
@@ -47,19 +47,8 @@ RSpec.describe Food, type: :model do
   end
 
   it 'is invalid with a duplicate name' do
-    food1 = Food.create(
-      name: 'Nasi Uduk',
-      description: 'Betawi style steamed rice cooked in coconut milk. Delicious!',
-      price: 10_000.0,
-      category: category
-    )
-
-    food2 = Food.new(
-      name: 'Nasi Uduk',
-      description: 'Just with a different description.',
-      price: 10_000.0,
-      category: category
-    )
+    FactoryBot.create(:food, name: 'Nasi Uduk')
+    food2 = FactoryBot.build(:food, name: 'Nasi Uduk')
 
     food2.valid?
 
@@ -82,26 +71,11 @@ RSpec.describe Food, type: :model do
 
   describe 'self#by_letter' do
     it 'should return a sorted array of results that match' do
-      food1 = Food.create(
-        name: 'Nasi Uduk',
-        description: 'Betawi style steamed rice cooked in coconut milk. Delicious!',
-        price: 10_000.0,
-        category: category
-      )
+      food1 = FactoryBot.create(:food, name: 'Nasi Uduk')
 
-      food2 = Food.create(
-        name: 'Kerak Telor',
-        description: 'Betawi traditional spicy omelette made from glutinous rice cooked with egg and served with serundeng.',
-        price: 8000.0,
-        category: category
-      )
+      FactoryBot.create(:food, name: 'Kerak Telor')
 
-      food3 = Food.create(
-        name: 'Nasi Semur Jengkol',
-        description: 'Based on dongfruit, this menu promises a unique and delicious taste with a small hint of bitterness.',
-        price: 8000.0,
-        category: category
-      )
+      food3 = FactoryBot.create(:food, name: 'Nasi Semur Jengkol')
 
       expect(Food.by_letter('N')).to eq([food3, food1])
     end
@@ -109,13 +83,8 @@ RSpec.describe Food, type: :model do
 
   describe 'self#by_category' do
     it 'should return foods that has the category' do
-      new_category = Category.new(name: 'test_test')
-      food2 = Food.create(
-        name: 'Nasi Semur Jengkol',
-        description: 'Based on dongfruit, this menu promises a unique and delicious taste with a small hint of bitterness.',
-        price: 8000.0,
-        category: new_category
-      )
+      new_category = FactoryBot.build(:category, name: 'test_test')
+      food2 = FactoryBot.create(:food, name: 'Nasi Semur Jengkol', category: new_category)
 
       expect(Food.by_category(category.name)).to eq([food])
       expect(Food.by_category(new_category.name)).to eq([food2])
